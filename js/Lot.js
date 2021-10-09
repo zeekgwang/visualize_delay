@@ -1,12 +1,17 @@
 import {Object} from './Object.js'
 
 export class Lot extends Object{
+
+    eqpSet;
+
     constructor(x, y, id){
         super();
         this.x = x;
         this.y = y;
         this.id = id;
+        this.waitOrder = 0;
         this.route = [];
+        this.curR = 0;
 
         this.color = 'red';
         this.size = 8;
@@ -21,20 +26,40 @@ export class Lot extends Object{
     }
 
     updatePos(time){
-        if(this.route.length > 0){
-            var curNode = this.route[0];
+        if(this.curR < this.route.length){
+            var curNode = this.route[this.curR];
 
-            if(time < curNode.tkinTime){
+            // Wait
+            if(time >= curNode.inTime && time < curNode.tkinTime){
                 this.x = curNode.eqpX - 40;
                 this.y = curNode.eqpY;
-            }else if(time >= curNode.tkinTime && time < curNode.tkoutTime){
+
+                if(time === curNode.inTime){
+                    this.eqpSet[curNode.eqpId].addWaitList(this.id, curNode.tkinTime)
+                    if(this.curR > 0){
+                        var prevNode = this.route[this.curR - 1]
+                        this.eqpSet[prevNode.eqpId].removeEndList(this.id)
+                    }
+                }
+            }
+            // Run
+            else if(time >= curNode.tkinTime && time < curNode.tkoutTime){
                 this.x = curNode.eqpX;
                 this.y = curNode.eqpY;
-            }else if (time >= curNode.tkoutTime){
+
+                if(time === curNode.tkinTime){
+                    this.eqpSet[curNode.eqpId].removeWaitList(this.id)
+                }
+            }
+            // End
+            else if (time >= curNode.tkoutTime){
                 this.x = curNode.eqpX + 40;
                 this.y = curNode.eqpY;
 
-                this.route.shift();
+                if(time === curNode.tkoutTime) {
+                    this.eqpSet[curNode.eqpId].addEndList(this.id)
+                    this.curR += 1;
+                }
             }
         }
     }
@@ -42,7 +67,7 @@ export class Lot extends Object{
     printRoute(){
         console.log(this.id)
         for(var r of this.route){
-            console.log(r)
+            console.log(r.eqpId)
         }
     }
 }
