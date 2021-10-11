@@ -17,15 +17,15 @@ var lotSet = {}
 
 var transaction = []
 transaction.push(["LOT001", "EQP001", 0, 3, 10]);
-transaction.push(["LOT001", "EQP021", 10, 12, 15]);
+transaction.push(["LOT001", "EQP021", 11, 12, 15]);
 transaction.push(["LOT002", "EQP002", 0, 1, 9]);
-transaction.push(["LOT002", "EQP021", 10, 17, 29]);
+transaction.push(["LOT002", "EQP021", 10, 17, 19]);
 transaction.push(["LOT003", "EQP002", 0, 10, 16]);
-transaction.push(["LOT003", "EQP021", 18, 30, 35]);
+transaction.push(["LOT003", "EQP021", 18, 20, 25]);
+
 
 eqpSet['EQP001'] = new Equipment(stepOrder['10'] * 200 + left_margin, 1 * 100, 'EQP001', '10', stepOrder['10'], 1)
 eqpSet['EQP002'] = new Equipment(stepOrder['10'] * 200 + left_margin, 2 * 100, 'EQP002', '10', stepOrder['10'], 2)
-eqpSet['EQP021'] = new Equipment(stepOrder['20'] * 200 + left_margin, 1 * 100, 'EQP021', '20', stepOrder['10'], 1)
 eqpSet['EQP021'] = new Equipment(stepOrder['20'] * 200 + left_margin, 1 * 100, 'EQP021', '20', stepOrder['10'], 1)
 
 
@@ -39,6 +39,13 @@ for (var row of transaction) {
     lotSet[row[0]].addNode(node)
 }
 
+lotSet['LOT001'].color = 'red'
+lotSet['LOT002'].color = 'blue'
+lotSet['LOT003'].color = 'grey'
+
+eqpSet['EQP001'].lotSet = lotSet
+eqpSet['EQP002'].lotSet = lotSet
+eqpSet['EQP021'].lotSet = lotSet
 
 var time = 0
 
@@ -50,6 +57,7 @@ function update(time) {
     }
 
     for (var eqpId in eqpSet) {
+        eqpSet[eqpId].updatePos()
         eqpSet[eqpId].printList()
     }
 }
