@@ -15,6 +15,7 @@ export class Equipment extends Object{
         this.size = 20;
 
         this.waitList = [];
+        this.runList = [];
         this.endList = [];
     }
 
@@ -44,6 +45,27 @@ export class Equipment extends Object{
         }
     }
 
+    addRunList(lotId, tkinTime){
+        var i;
+
+        for(i = 0 ; i < this.runList.length ; i++){
+            if(this.runList[i][1] > tkinTime){
+                break
+            }
+        }
+
+        this.runList.splice(i, 0, [lotId, tkinTime])
+    }
+
+    removeRunList(lotId){
+        for(var i = 0 ; i < this.runList.length ; i++){
+            if(this.runList[i][0] === lotId){
+                this.runList.splice(i, 1)
+                break
+            }
+        }
+    }
+
     addEndList(lotId, tkoutTime){
         var i;
 
@@ -66,21 +88,26 @@ export class Equipment extends Object{
     }
 
     printList(){
-        console.log(this.id)
         var wList = []
         for (var wLot of this.waitList){
             wList.push(wLot[0])
         }
-        console.log(wList.join(", "))
 
-        // console.log(this.waitList)
+        var rList = []
+        for (var rLot of this.runList){
+            rList.push(rLot[0])
+        }
 
         var eList = []
         for (var eLot of this.endList){
             eList.push(eLot[0])
         }
-        console.log(eList.join(", "))
 
-        // console.log(this.endList)
+        console.log(this.id)
+
+        console.log("wList : ", wList.join(", "))
+        console.log("rList : ", rList.join(", "))
+        console.log("eList : ", eList.join(", "))
+
     }
 }
