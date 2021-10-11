@@ -5,7 +5,17 @@
     <title>Canvas Test</title>
 </head>
 <body>
-    <canvas id="canvas" width="1800" height="1800"></canvas>
+<div style="display: flex">
+    <button id="slowerBtn">Slower</button>
+    <button id="startBtn">Start</button>
+    <button id="pauseBtn">Pause</button>
+    <button id="fasterBtn">Faster</button>
+
+    Time : <span id="time"></span>
+    Speed : <span id="speed"></span>
+    Status : <span id="status"></span>
+</div>
+<canvas id="canvas" width="1800" height="1800"></canvas>
 </body>
-<script type="module" src="js/canvas.js"></script>
+<script type="module" src="js/animation.js"></script>
 </html>

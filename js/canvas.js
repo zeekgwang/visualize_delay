@@ -1,12 +1,6 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
-var stepOrder = {
-    "10": 0,
-    "20": 1,
-    "30": 2
-}
-
 import {Node} from './Node.js'
 import {Lot} from './Lot.js'
 import {Equipment} from './Equipment.js'
@@ -14,6 +8,12 @@ import {Equipment} from './Equipment.js'
 var left_margin = 200
 var eqpSet = {}
 var lotSet = {}
+
+var stepOrder = {
+    "10": 0,
+    "20": 1,
+    "30": 2
+}
 
 var transaction = []
 transaction.push(["LOT001", "EQP001", 0, 3, 10]);
@@ -47,9 +47,7 @@ eqpSet['EQP001'].lotSet = lotSet
 eqpSet['EQP002'].lotSet = lotSet
 eqpSet['EQP021'].lotSet = lotSet
 
-var time = 0
-
-function update(time) {
+export function update(time) {
     for (var lotId in lotSet) {
         lotSet[lotId].updatePos(time)
         // lotSet[lotId].printInfo()
@@ -58,11 +56,11 @@ function update(time) {
 
     for (var eqpId in eqpSet) {
         eqpSet[eqpId].updatePos()
-        eqpSet[eqpId].printList()
+        // eqpSet[eqpId].printList()
     }
 }
 
-function draw() {
+export function draw() {
     ctx.clearRect(0, 0, 10000, 10000)
 
     for (var eqpId in eqpSet) {
@@ -73,33 +71,5 @@ function draw() {
         lotSet[lotId].drawObj(ctx)
     }
 }
-
-
-function run() {
-    console.log(time)
-
-    update(time)
-    draw();
-    time++;
-}
-
-setInterval(run, 1000);
-
-
-// lot 위치 확인
-// var lotSet = {}
-// lotSet['LOT001'] = new Lot(160, 100, 'LOT001');
-// lotSet['LOT002'] = new Lot(140, 100, 'LOT002');
-// lotSet['LOT003'] = new Lot(160, 200, 'LOT003');
-// lotSet['LOT004'] = new Lot(360, 100, 'LOT004');
-// lotSet['LOT005'] = new Lot(400, 100, 'LOT005');
-// lotSet['LOT006'] = new Lot(240, 200, 'LOT006');
-// //240, 200 -> 360, 100
-// lotSet['LOT007'] = new Lot(240 + (360 - 240) * (1-0.4), 200 + (100 - 200) * (1-0.4), 'LOT007');
-// lotSet['LOT008'] = new Lot(240 + (360 - 240) * (1-0.7), 200 + (100 - 200) * (1-0.7), 'LOT008');
-
-
-
-
 
 
