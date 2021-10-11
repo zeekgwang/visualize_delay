@@ -39,10 +39,6 @@ for (var row of transaction) {
     lotSet[row[0]].addNode(node)
 }
 
-lotSet['LOT001'].color = 'red'
-lotSet['LOT002'].color = 'blue'
-lotSet['LOT003'].color = 'grey'
-
 eqpSet['EQP001'].lotSet = lotSet
 eqpSet['EQP002'].lotSet = lotSet
 eqpSet['EQP021'].lotSet = lotSet
@@ -72,4 +68,7 @@ export function draw() {
     }
 }
 
+export function changeLotColor(lotId, color){
+    lotSet[lotId].color = color;
+}
 

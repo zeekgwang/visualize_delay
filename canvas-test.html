@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Canvas Test</title>
+
+    <script type="module" src="js/initialize.js"></script>
 </head>
 <body>
 <div style="display: flex">
@@ -15,7 +17,14 @@
     Speed : <span id="speed"></span>
     Status : <span id="status"></span>
 </div>
-<canvas id="canvas" width="1800" height="1800"></canvas>
-</body>
+<div style="display: flex; width: 1200px">
+    <div id="info-container" style="width: 150px; height: 1000px;">
+    </div>
+    <div id="canvas-container" style="width: 1000px; height: 1000px">
+        <canvas id="canvas" width="1000px" height="1000px"></canvas>
+    </div>
+</div>
+
 <script type="module" src="js/animation.js"></script>
+</body>
 </html>
