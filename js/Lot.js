@@ -4,10 +4,14 @@ export class Lot extends Object{
 
     eqpSet;
 
-    constructor(x, y, id){
+    constructor(fx, fy, id){
         super();
-        this.x = x;
-        this.y = y;
+        //fx(fixed X)
+        this.fx = fx;
+        this.fy = fy;
+        this.x = fx;
+        this.y = fy;
+
         this.id = id;
         this.waitOrder = 0;
         this.route = [];
@@ -18,7 +22,7 @@ export class Lot extends Object{
     }
 
     printInfo(){
-        console.log(this.x, this.y, this.id)
+        console.log(this.fx, this.fy, this.id)
     }
 
     addNode(node){
@@ -31,8 +35,8 @@ export class Lot extends Object{
 
             // Wait
             if(time >= curNode.inTime && time < curNode.tkinTime){
-                this.x = curNode.eqpX - 40;
-                this.y = curNode.eqpY;
+                this.fx = curNode.eqpX - 40;
+                this.fy = curNode.eqpY;
 
                 if(time === curNode.inTime){
                     this.eqpSet[curNode.eqpId].addWaitList(this.id, curNode.tkinTime)
@@ -44,8 +48,8 @@ export class Lot extends Object{
             }
             // Run
             else if(time >= curNode.tkinTime && time < curNode.tkoutTime){
-                this.x = curNode.eqpX;
-                this.y = curNode.eqpY;
+                this.fx = curNode.eqpX;
+                this.fy = curNode.eqpY;
 
                 if(time === curNode.tkinTime){
                     this.eqpSet[curNode.eqpId].removeWaitList(this.id)
@@ -54,8 +58,8 @@ export class Lot extends Object{
             }
             // End
             else if (time >= curNode.tkoutTime){
-                this.x = curNode.eqpX + 40;
-                this.y = curNode.eqpY;
+                this.fx = curNode.eqpX + 40;
+                this.fy = curNode.eqpY;
 
                 if(time === curNode.tkoutTime) {
                     this.eqpSet[curNode.eqpId].removeRunList(this.id)
@@ -64,6 +68,9 @@ export class Lot extends Object{
                 }
             }
         }
+
+        this.x = this.fx;
+        this.y = this.fy;
     }
 
     printRoute(){

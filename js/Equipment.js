@@ -1,6 +1,9 @@
 import {Object} from './Object.js'
 
 export class Equipment extends Object{
+
+    lotSet;
+
     constructor(x, y, id, step, stepOrder, order){
         super();
         this.x = x;
@@ -22,6 +25,27 @@ export class Equipment extends Object{
     printInfo(){
         console.log(this.x, this.y, this.id)
         console.log(this.step, this.stepOrder, this.order)
+    }
+
+    updatePos(){
+        for(var i = 0 ; i < this.waitList.length ; i++){
+            this.lotSet[this.waitList[i][0]].x -= (this.lotSet[this.waitList[i][0]].size * 2 + 2) * parseInt(i / 2)
+            if(i % 2 === 0){
+                this.lotSet[this.waitList[i][0]].y -= (this.lotSet[this.waitList[i][0]].size + 1)
+            }else{
+                this.lotSet[this.waitList[i][0]].y += (this.lotSet[this.waitList[i][0]].size + 1)
+            }
+        }
+
+        var endList_r = [...this.endList].reverse()
+        for(var i = 0 ; i < endList_r.length ; i++){
+            this.lotSet[endList_r[i][0]].x += (this.lotSet[endList_r[i][0]].size * 2 + 2) * parseInt(i / 2)
+            if(i % 2 === 0){
+                this.lotSet[endList_r[i][0]].y += (this.lotSet[endList_r[i][0]].size + 1)
+            }else{
+                this.lotSet[endList_r[i][0]].y -= (this.lotSet[endList_r[i][0]].size + 1)
+            }
+        }
     }
 
     addWaitList(lotId, tkinTime){
