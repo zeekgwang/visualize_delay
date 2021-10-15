@@ -53,7 +53,7 @@ export class Lot extends Object{
 
                 if(time === curNode.tkinTime){
                     this.eqpSet[curNode.eqpId].removeWaitList(this.id)
-                    this.eqpSet[curNode.eqpId].addRunList(this.id)
+                    this.eqpSet[curNode.eqpId].addRunList(this.id, curNode.tkoutTime)
                 }
             }
             // End
@@ -63,7 +63,7 @@ export class Lot extends Object{
 
                 if(time === curNode.tkoutTime) {
                     this.eqpSet[curNode.eqpId].removeRunList(this.id)
-                    this.eqpSet[curNode.eqpId].addEndList(this.id)
+                    this.eqpSet[curNode.eqpId].addEndList(this.id, curNode.tkoutTime)
                     this.curR += 1;
                 }
             }
