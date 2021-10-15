@@ -44,6 +44,10 @@ eqpSet['EQP002'].lotSet = lotSet
 eqpSet['EQP021'].lotSet = lotSet
 
 export function update(time) {
+    for (var eqpId in eqpSet) {
+        eqpSet[eqpId].clearList()
+    }
+
     for (var lotId in lotSet) {
         lotSet[lotId].updatePos(time)
         // lotSet[lotId].printRoute()

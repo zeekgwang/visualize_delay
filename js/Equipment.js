@@ -28,22 +28,22 @@ export class Equipment extends Object{
     }
 
     updatePos(){
-        for(var i = 0 ; i < this.waitList.length ; i++){
-            this.lotSet[this.waitList[i][0]].x -= (this.lotSet[this.waitList[i][0]].size * 2 + 2) * parseInt(i / 2)
-            if(i % 2 === 0){
-                this.lotSet[this.waitList[i][0]].y -= (this.lotSet[this.waitList[i][0]].size + 1)
+        for(var w = 0 ; w < this.waitList.length ; w++){
+            this.lotSet[this.waitList[w][0]].x -= (this.lotSet[this.waitList[w][0]].size * 2 + 2) * parseInt(w / 2)
+            if(w % 2 === 0){
+                this.lotSet[this.waitList[w][0]].y -= (this.lotSet[this.waitList[w][0]].size + 1)
             }else{
-                this.lotSet[this.waitList[i][0]].y += (this.lotSet[this.waitList[i][0]].size + 1)
+                this.lotSet[this.waitList[w][0]].y += (this.lotSet[this.waitList[w][0]].size + 1)
             }
         }
 
         var endList_r = [...this.endList].reverse()
-        for(var i = 0 ; i < endList_r.length ; i++){
-            this.lotSet[endList_r[i][0]].x += (this.lotSet[endList_r[i][0]].size * 2 + 2) * parseInt(i / 2)
-            if(i % 2 === 0){
-                this.lotSet[endList_r[i][0]].y += (this.lotSet[endList_r[i][0]].size + 1)
+        for(var e = 0 ; e < endList_r.length ; e++){
+            this.lotSet[endList_r[e][0]].x += (this.lotSet[endList_r[e][0]].size * 2 + 2) * parseInt(e / 2)
+            if(e % 2 === 0){
+                this.lotSet[endList_r[e][0]].y += (this.lotSet[endList_r[e][0]].size + 1)
             }else{
-                this.lotSet[endList_r[i][0]].y -= (this.lotSet[endList_r[i][0]].size + 1)
+                this.lotSet[endList_r[e][0]].y -= (this.lotSet[endList_r[e][0]].size + 1)
             }
         }
     }
@@ -109,6 +109,12 @@ export class Equipment extends Object{
                 break
             }
         }
+    }
+
+    clearList(){
+        this.waitList = []
+        this.runList = []
+        this.endList = []
     }
 
     printList(){

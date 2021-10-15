@@ -55,30 +55,17 @@ export class Lot extends Object {
             this.fx = curNode.eqpX - 40;
             this.fy = curNode.eqpY;
 
-            if (time === curNode.startTime) {
-                this.eqpSet[curNode.eqpId].addWaitList(this.id, curNode.endTime)
-                if (this.curR > 0) {
-                    var prevNode = this.route[this.curR - 1]
-                    this.eqpSet[prevNode.eqpId].removeEndList(this.id)
-                }
-            }
+            this.eqpSet[curNode.eqpId].addWaitList(this.id, curNode.endTime)
         } else if (curNode.eventType === "running") {
             this.fx = curNode.eqpX;
             this.fy = curNode.eqpY;
 
-            if (time === curNode.startTime) {
-                this.eqpSet[curNode.eqpId].removeWaitList(this.id)
-                this.eqpSet[curNode.eqpId].addRunList(this.id, curNode.startTime)
-            }
+            this.eqpSet[curNode.eqpId].addRunList(this.id, curNode.startTime)
         } else if (curNode.eventType === "end") {
             this.fx = curNode.eqpX + 40;
             this.fy = curNode.eqpY;
 
-            if (time === curNode.startTime) {
-                this.eqpSet[curNode.eqpId].removeRunList(this.id)
-                this.eqpSet[curNode.eqpId].addEndList(this.id, curNode.startTime)
-                this.curR += 1;
-            }
+            this.eqpSet[curNode.eqpId].addEndList(this.id, curNode.startTime)
         }
 
         this.x = this.fx;
