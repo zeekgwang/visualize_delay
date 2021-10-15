@@ -7,11 +7,14 @@
     <script type="module" src="js/initialize.js"></script>
 </head>
 <body>
+<label for="timeSlider">Time Slider</label><input id="timeSlider" type="range" style="width: 300px" value="0" max="30">
 <div style="display: flex">
     <button id="slowerBtn">Slower</button>
     <button id="startBtn">Start</button>
     <button id="pauseBtn">Pause</button>
     <button id="fasterBtn">Faster</button>
+    <button id="prevBtn">Prev</button>
+    <button id="nextBtn">Next</button>
 
     Time : <span id="time"></span>
     Speed : <span id="speed"></span>
