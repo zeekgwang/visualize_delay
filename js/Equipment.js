@@ -29,11 +29,11 @@ export class Equipment extends Object {
 
     updatePos() {
         for (var w = 0; w < this.waitList.length; w++) {
-            this.lotSet[this.waitList[w][0]].x -= (this.lotSet[this.waitList[w][0]].size * 2 + 2) * parseInt(w / 2)
+            this.lotSet[this.waitList[w][0]].x_next -= (this.lotSet[this.waitList[w][0]].size * 2 + 2) * parseInt(w / 2)
             if (w % 2 === 0) {
-                this.lotSet[this.waitList[w][0]].y -= (this.lotSet[this.waitList[w][0]].size + 1)
+                this.lotSet[this.waitList[w][0]].y_next -= (this.lotSet[this.waitList[w][0]].size + 1)
             } else {
-                this.lotSet[this.waitList[w][0]].y += (this.lotSet[this.waitList[w][0]].size + 1)
+                this.lotSet[this.waitList[w][0]].y_next += (this.lotSet[this.waitList[w][0]].size + 1)
             }
         }
 
