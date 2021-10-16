@@ -36,9 +36,7 @@ export class Lot extends Object {
             return -1
         }
 
-        var i
-
-        for(i = 0; i < this.route.length ; i++){
+        for(var i = 0; i < this.route.length ; i++){
             if(time >= this.route[i].startTime && time < this.route[i].endTime){
                 return this.route[i]
             }
@@ -49,23 +47,22 @@ export class Lot extends Object {
 
     updatePos(time) {
         var curNode = this.findNode(time)
-        console.log(this.id, time, curNode)
 
         if (curNode.eventType === "wait") {
-            this.fx = curNode.eqpX - 40;
-            this.fy = curNode.eqpY;
+            this.fx = curNode.eqp.x - 40;
+            this.fy = curNode.eqp.y;
 
-            this.eqpSet[curNode.eqpId].addWaitList(this.id, curNode.endTime)
+            curNode.eqp.addWaitList(this.id, curNode.endTime)
         } else if (curNode.eventType === "running") {
-            this.fx = curNode.eqpX;
-            this.fy = curNode.eqpY;
+            this.fx = curNode.eqp.x;
+            this.fy = curNode.eqp.y;
 
-            this.eqpSet[curNode.eqpId].addRunList(this.id, curNode.startTime)
+            curNode.eqp.addRunList(this.id, curNode.startTime)
         } else if (curNode.eventType === "end") {
-            this.fx = curNode.eqpX + 40;
-            this.fy = curNode.eqpY;
+            this.fx = curNode.eqp.x + 40;
+            this.fy = curNode.eqp.y;
 
-            this.eqpSet[curNode.eqpId].addEndList(this.id, curNode.startTime)
+            curNode.eqp.addEndList(this.id, curNode.startTime)
         }
 
         this.x = this.fx;
@@ -75,7 +72,7 @@ export class Lot extends Object {
     printRoute() {
         console.log(this.id)
         for (var r of this.route) {
-            console.log(r.eqpId, r.eventType, r.startTime, r.endTime)
+            console.log(r.eqp, r.eventType, r.startTime, r.endTime)
         }
     }
 }

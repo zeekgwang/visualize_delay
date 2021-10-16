@@ -1,9 +1,8 @@
-
-import {draw, update} from './canvas.js'
+import {draw, update, getRectClicked, setEqpPos} from './canvas.js'
 
 var RUN = 0
 var PAUSE = 1
-var STATUSDICT = {0 : "RUN", 1 : "PAUSE"}
+var STATUSDICT = {0: "RUN", 1: "PAUSE"}
 
 var mInterval
 var time = 0
@@ -33,7 +32,7 @@ function restart() {
 
 function makeFaster() {
     intervalSpeed /= 2
-    if(intervalStatus === RUN){
+    if (intervalStatus === RUN) {
         restart()
     }
     setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
@@ -41,14 +40,14 @@ function makeFaster() {
 
 function makeSlower() {
     intervalSpeed *= 2
-    if(intervalStatus === RUN){
+    if (intervalStatus === RUN) {
         restart()
     }
     setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
 }
 
-function prev(){
-    if(intervalStatus === RUN || time <= 0){
+function prev() {
+    if (intervalStatus === RUN || time <= 0) {
         return
     }
 
@@ -58,8 +57,8 @@ function prev(){
     setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
 }
 
-function next(){
-    if(intervalStatus === RUN || time >= maxTime){
+function next() {
+    if (intervalStatus === RUN || time >= maxTime) {
         return
     }
 
@@ -69,8 +68,8 @@ function next(){
     setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
 }
 
-function moveTimeSlider(){
-    if(intervalStatus === RUN){
+function moveTimeSlider() {
+    if (intervalStatus === RUN) {
         return
     }
 
@@ -80,7 +79,7 @@ function moveTimeSlider(){
     setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
 }
 
-function setIntervalInfo(time, speed, status){
+function setIntervalInfo(time, speed, status) {
     document.getElementById("time").textContent = time
     document.getElementById("speed").textContent = speed
     document.getElementById("status").textContent = status
@@ -110,4 +109,23 @@ document.getElementById("slowerBtn").onclick = makeSlower
 document.getElementById("prevBtn").onclick = prev
 document.getElementById("nextBtn").onclick = next
 document.getElementById("timeSlider").onchange = moveTimeSlider
+
+
+var canvas = document.getElementById("canvas")
+var eqpClicked = ""
+canvas.onmousedown = function (e) {
+    console.log(getRectClicked(e.offsetX, e.offsetY), "clicked")
+    eqpClicked = getRectClicked(e.offsetX, e.offsetY)
+}
+canvas.onmousemove = function (e) {
+    if (eqpClicked !== "") {
+        setEqpPos(eqpClicked, e.offsetX, e.offsetY)
+        update(time)
+        draw()
+    }
+}
+canvas.onmouseup = function (e) {
+    console.log(getRectClicked(e.offsetX, e.offsetY), "moved")
+    eqpClicked = ""
+}
 

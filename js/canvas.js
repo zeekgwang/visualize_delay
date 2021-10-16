@@ -44,16 +44,19 @@ eqpSet['EQP002'].lotSet = lotSet
 eqpSet['EQP021'].lotSet = lotSet
 
 export function update(time) {
-    for (var eqpId in eqpSet) {
+    var eqpId
+    var lotId
+
+    for (eqpId in eqpSet) {
         eqpSet[eqpId].clearList()
     }
 
-    for (var lotId in lotSet) {
+    for (lotId in lotSet) {
         lotSet[lotId].updatePos(time)
         // lotSet[lotId].printRoute()
     }
 
-    for (var eqpId in eqpSet) {
+    for (eqpId in eqpSet) {
         eqpSet[eqpId].updatePos()
         // eqpSet[eqpId].printList()
     }
@@ -71,7 +74,20 @@ export function draw() {
     }
 }
 
-export function changeLotColor(lotId, color){
+export function changeLotColor(lotId, color) {
     lotSet[lotId].color = color;
 }
 
+export function getRectClicked(x, y) {
+    for (var eqpId in eqpSet) {
+        if (eqpSet[eqpId].isClicked(x, y)) {
+            return eqpId
+        }
+    }
+    return "";
+}
+
+export function setEqpPos(eqpId, x, y) {
+    eqpSet[eqpId].x = x
+    eqpSet[eqpId].y = y
+}
