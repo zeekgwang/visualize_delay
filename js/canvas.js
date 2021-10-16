@@ -12,36 +12,45 @@ var lotSet = {}
 var stepOrder = {
     "10": 0,
     "20": 1,
-    "30": 2
+    "30": 2,
+    "40": 3
 }
 
+var eqpOrder = {}
+
 var transaction = []
-transaction.push(["LOT001", "EQP001", 0, 3, 10, 11]);
-transaction.push(["LOT001", "EQP021", 11, 12, 15, 30]);
-transaction.push(["LOT002", "EQP002", 0, 1, 9, 10]);
-transaction.push(["LOT002", "EQP021", 10, 17, 19, 30]);
-transaction.push(["LOT003", "EQP002", 0, 10, 16, 18]);
-transaction.push(["LOT003", "EQP021", 18, 20, 25, 30]);
+transaction.push(["LOT001", "EQP001", "10", 3, 10, 12]);
+transaction.push(["LOT001", "EQP011", "20", 12, 17, 20]);
+transaction.push(["LOT001", "EQP021", "30", 20, 23, 30]);
+transaction.push(["LOT001", "EQP031", "40", 30, 40, 40]);
+transaction.push(["LOT002", "EQP002", "10", 1, 5, 7]);
+transaction.push(["LOT002", "EQP012", "20", 7, 17, 25]);
+transaction.push(["LOT002", "EQP022", "30", 25, 28, 35]);
+transaction.push(["LOT002", "EQP032", "40", 35, 37, 37]);
 
-eqpSet['EQP001'] = new Equipment(stepOrder['10'] * 200 + left_margin, 1 * 100, 'EQP001', '10', stepOrder['10'], 1)
-eqpSet['EQP002'] = new Equipment(stepOrder['10'] * 200 + left_margin, 2 * 100, 'EQP002', '10', stepOrder['10'], 2)
-eqpSet['EQP021'] = new Equipment(stepOrder['20'] * 200 + left_margin, 1 * 100, 'EQP021', '20', stepOrder['10'], 1)
+for (var row of transaction) {
+    if(eqpSet[row[1]] === undefined){
+        if(eqpOrder[row[2]] === undefined){
+            eqpOrder[row[2]] = 1
+        }else{
+            eqpOrder[row[2]] = eqpOrder[row[2]] + 1
+        }
 
+        eqpSet[row[1]] = new Equipment(stepOrder[row[2]] * 200 + left_margin, eqpOrder[row[2]] * 100, row[1], row[2], stepOrder[row[2]], eqpOrder[row[2]])
+        eqpSet[row[1]].lotSet = lotSet
+    }
+}
 
 for (var row of transaction) {
     if (lotSet[row[0]] === undefined) {
-        lotSet[row[0]] = (new Lot(0, 0, row[0]))
+        lotSet[row[0]] = new Lot(0, 0, row[0])
         lotSet[row[0]].eqpSet = eqpSet
     }
 
-    lotSet[row[0]].addNode(new Node(eqpSet[row[1]], "wait", row[2], row[3]))
     lotSet[row[0]].addNode(new Node(eqpSet[row[1]], "running", row[3], row[4]))
     lotSet[row[0]].addNode(new Node(eqpSet[row[1]], "end", row[4], row[5]))
 }
 
-eqpSet['EQP001'].lotSet = lotSet
-eqpSet['EQP002'].lotSet = lotSet
-eqpSet['EQP021'].lotSet = lotSet
 
 export function update(time) {
     var eqpId
@@ -53,6 +62,7 @@ export function update(time) {
 
     for (lotId in lotSet) {
         lotSet[lotId].updatePos(time)
+        // lotSet[lotId].printInfo()
         // lotSet[lotId].printRoute()
     }
 
