@@ -4,9 +4,47 @@
     <meta charset="UTF-8">
     <title>Canvas Test</title>
 
-    <script type="module" src="js/initialize.js"></script>
+    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+    <script src="https://jsuites.net/v4/jsuites.js"></script>
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css"/>
+    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css"/>
 </head>
 <body>
+
+<div style="display: flex">
+    <span>Input Data</span>
+    <button id="compile">COMPILE</button>
+    <button id="run">RUN</button>
+</div>
+<table id="spreadsheet">
+    <thead>
+    <tr>
+        <td id='lotId' style="width: 100px">LOT ID</td>
+        <td id='eqpId' style="width: 100px">EQP ID</td>
+        <td id='step' style="width: 100px">STEPSEQ</td>
+        <td id='tkinTime' style="width: 200px">TKINTIME</td>
+        <td id='tkoutTim' style="width: 200px">TKOUTTIME</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>LOT001</td>
+        <td>EQP001</td>
+        <td>10</td>
+        <td>3</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>LOT001</td>
+        <td>EQP002</td>
+        <td>20</td>
+        <td>13</td>
+        <td>15</td>
+    </tr>
+    </tbody>
+</table>
+<input id="jsonData" type="hidden">
+<br>
 <label for="timeSlider">Time Slider</label><input id="timeSlider" type="range" style="width: 300px" value="0" max="30">
 <div style="display: flex">
     <button id="slowerBtn">Slower</button>
@@ -27,7 +65,18 @@
         <canvas id="canvas" width="1000px" height="1000px"></canvas>
     </div>
 </div>
+<script>
+    var runSheet = jspreadsheet(document.getElementById('spreadsheet'));
+    document.getElementById("compile").onclick = function(){
+        document.getElementById("jsonData").value = JSON.stringify(runSheet.getJson());
+    }
+</script>
 
+<!--<script type="module" src="js/initialize.js"></script>-->
 <script type="module" src="js/animation.js"></script>
+<script type="module" src="js/IOparser.js"></script>
+<script>
+
+</script>
 </body>
 </html>

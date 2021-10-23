@@ -1,7 +1,8 @@
 import {changeLotColor, draw} from "./canvas.js";
 
-function makeLotElement(LotIdList) {
+export function makeLotElement(LotIdList) {
     var container = document.getElementById("info-container")
+    container.innerHTML = ""
     var lotId
     for (lotId of LotIdList) {
         var elemStr = ""
@@ -22,4 +23,3 @@ function makeLotElement(LotIdList) {
     }
 }
 
-makeLotElement(['LOT001', 'LOT002', 'LOT003'])
