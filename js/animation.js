@@ -12,17 +12,21 @@ var intervalStatus = PAUSE
 var intervalStatusStr = "PAUSE"
 
 function start() {
-    mInterval = setInterval(run, 1000 * intervalSpeed)
-    intervalStatus = RUN
-    intervalStatusStr = STATUSDICT[intervalStatus]
-    setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
+    if(intervalStatus === PAUSE){
+        mInterval = setInterval(run, 1000 * intervalSpeed)
+        intervalStatus = RUN
+        intervalStatusStr = STATUSDICT[intervalStatus]
+        setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
+    }
 }
 
 function pause() {
-    clearInterval(mInterval)
-    intervalStatus = PAUSE
-    intervalStatusStr = STATUSDICT[intervalStatus]
-    setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
+    if(intervalStatus === RUN){
+        clearInterval(mInterval)
+        intervalStatus = PAUSE
+        intervalStatusStr = STATUSDICT[intervalStatus]
+        setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
+    }
 }
 
 function restart() {
