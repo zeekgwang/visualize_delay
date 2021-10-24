@@ -4,14 +4,12 @@ import {Node} from "./Node.js";
 
 import {makeLotElement} from "./initialize.js";
 import {setObject, draw} from "./canvas.js";
-
+import {init} from "./animation.js";
 
 const EQP_MARGIN_HORIZONTAL = 200
 const EQP_MARGIN_VERTICAL = 200
 
-
 document.getElementById("run").onclick = initialize
-
 
 function getTransaction(jsonData) {
     var curLot = jsonData[0][0]
@@ -23,8 +21,15 @@ function getTransaction(jsonData) {
             jsonData[i][5] = jsonData[i][3]
             curLot = jsonData[i + 1][0]
         }
+
+        jsonData[i][3] = parseInt(jsonData[i][3])
+        jsonData[i][4] = parseInt(jsonData[i][4])
+        jsonData[i][5] = parseInt(jsonData[i][5])
     }
     jsonData[jsonData.length - 1][5] = jsonData[jsonData.length - 1][4]
+    jsonData[jsonData.length - 1][3] = parseInt(jsonData[jsonData.length - 1][3])
+    jsonData[jsonData.length - 1][4] = parseInt(jsonData[jsonData.length - 1][4])
+    jsonData[jsonData.length - 1][5] = parseInt(jsonData[jsonData.length - 1][5])
 
     return jsonData
 }
@@ -97,6 +102,16 @@ export function makeLotAndEqpSet(transaction) {
     return [eqpSet, lotSet]
 }
 
+function getMaxTime(transaction){
+    var maxTime = 0
+    for (var r = 0 ; r < transaction.length ; r++) {
+        if(maxTime < transaction[r][5]){
+            maxTime = transaction[r][5]
+        }
+    }
+    return maxTime + 5
+}
+
 function initialize() {
     var jsonData = JSON.parse(document.getElementById("jsonData").value)
     var transaction = getTransaction(jsonData)
@@ -106,7 +121,9 @@ function initialize() {
     var eqpSet = setArr[0]
     var lotSet = setArr[1]
 
+    init();
     makeLotElement(Object.keys(lotSet))
+    document.getElementById("timeSlider").setAttribute("max", getMaxTime(transaction));
     setObject(eqpSet, lotSet)
     draw()
 }

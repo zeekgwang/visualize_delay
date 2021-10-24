@@ -6,7 +6,6 @@ var STATUSDICT = {0: "RUN", 1: "PAUSE"}
 
 var mInterval
 var time = 0
-var maxTime = 30
 var intervalSpeed = 1
 var intervalStatus = PAUSE
 var intervalStatusStr = "PAUSE"
@@ -62,7 +61,7 @@ function prev() {
 }
 
 function next() {
-    if (intervalStatus === RUN || time >= maxTime) {
+    if (intervalStatus === RUN || time >= document.getElementById("timeSlider").getAttribute("max")) {
         return
     }
 
@@ -98,7 +97,12 @@ function run() {
     setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
 }
 
-function init() {
+export function init() {
+    time = 0
+    intervalSpeed = 1
+    intervalStatus = PAUSE
+    intervalStatusStr = "PAUSE"
+
     setIntervalInfo(time, 1 / intervalSpeed, intervalStatusStr)
     update(0)
     draw()
@@ -118,7 +122,6 @@ document.getElementById("timeSlider").onchange = moveTimeSlider
 var canvas = document.getElementById("canvas")
 var eqpClicked = ""
 canvas.onmousedown = function (e) {
-    console.log(getRectClicked(e.offsetX, e.offsetY), "clicked")
     eqpClicked = getRectClicked(e.offsetX, e.offsetY)
 }
 canvas.onmousemove = function (e) {
@@ -128,8 +131,7 @@ canvas.onmousemove = function (e) {
         draw()
     }
 }
-canvas.onmouseup = function (e) {
-    console.log(getRectClicked(e.offsetX, e.offsetY), "moved")
+canvas.onmouseup = function () {
     eqpClicked = ""
 }
 
